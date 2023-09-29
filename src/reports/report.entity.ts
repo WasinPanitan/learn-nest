@@ -6,5 +6,5 @@ export class Report {
   id: number;
 
   @Column()
-  priec: number;
+  price: number;
 }
