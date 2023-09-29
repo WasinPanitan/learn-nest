@@ -2,13 +2,16 @@ version: '3'
 
 services:
   db:
-    image: postgres:14.1-alpine
+    image: postgres:13-alpine
     restart: always
-    environment:
-      POSTRGES_DB: "db_dev"
+    network_mode: bridge
     ports:
-      - '5432:5432'
-    volumes: 
+      - 5432:5432
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: "nest_dev"
+    volumes:
       - db:/var/lib/postgresql/data
+
 volumes:
   db:
