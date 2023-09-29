@@ -11,6 +11,6 @@ export class UsersController {
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
     console.log('handler ', body);
-    this.userService.create(body.email, body.password);
+    return this.userService.create(body.email, body.password);
   }
 }
