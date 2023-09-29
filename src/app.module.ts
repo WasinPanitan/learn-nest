@@ -7,6 +7,8 @@ import { CatsService } from './cats/cats.service';
 import { DogsModule } from './dogs/dogs.module';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+import { User } from './users/user.entity';
+import { Report } from './reports/report.entity';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import { ReportsModule } from './reports/reports.module';
       username: 'postgres',
       password: 'postgres',
       database: 'nest_dev',
-      entities: [],
+      entities: [User, Report],
       synchronize: true,
     }),
     CatsModule,
