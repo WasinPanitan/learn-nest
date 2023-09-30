@@ -15,14 +15,20 @@ export class UsersController {
 
   @Get('/colors/:color')
   setColor(@Param('color') color: string, @Session() session: any) {
-    session.color = color;
+    session.set('color', color);
     return color;
   }
 
   @Get('/colors')
-  getColor(@CurrentUser() user: string, @Session() session: any) {
+  getColor(@Session() session: any) {
     console.log(session);
     return session.color;
+  }
+
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: string) {
+    console.log(user);
+    return user;
   }
 
   @Serialize(UserDto)
@@ -30,7 +36,7 @@ export class UsersController {
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     console.log('handler ', body);
     const user = await this.authService.signup(body.email, body.password);
-    session.userId = user.id;
+    session.set('userId', user.id);
     return user;
   }
 
@@ -38,14 +44,14 @@ export class UsersController {
   async signin(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
     console.log(user.id);
-    session.userId = user.id;
+    session.set('userId', user.id);
     console.log(session);
     return user;
   }
 
   @Post('/signout')
   signOut(@Session() session: any) {
-    session.userId = null;
+    session.set('userId', null);
     return 'success';
   }
 }
