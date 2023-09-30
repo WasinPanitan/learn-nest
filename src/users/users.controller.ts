@@ -4,6 +4,7 @@ import { UsersService } from './users.service';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +20,8 @@ export class UsersController {
   }
 
   @Get('/colors')
-  getColor(@Session() session: any) {
+  getColor(@CurrentUser() user: string, @Session() session: any) {
+    console.log(session);
     return session.color;
   }
 
@@ -35,7 +37,9 @@ export class UsersController {
   @Post('/signin')
   async signin(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
+    console.log(user.id);
     session.userId = user.id;
+    console.log(session);
     return user;
   }
 
