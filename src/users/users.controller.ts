@@ -38,4 +38,10 @@ export class UsersController {
     session.userId = user.id;
     return user;
   }
+
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+    return 'success';
+  }
 }
