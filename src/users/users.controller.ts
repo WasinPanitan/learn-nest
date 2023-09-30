@@ -18,4 +18,9 @@ export class UsersController {
     console.log('handler ', body);
     return this.authService.signup(body.email, body.password);
   }
+
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.email, body.password);
+  }
 }
